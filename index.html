@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MISSION: AETHER — UNIT: VESTA — CMD: REN ISHII</title>
+<title>⚠ SIGNAL LOST — MISSION: AETHER — UNIT: VESTA</title>
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 /* ─── DESIGN TOKENS ─────────────────────────────────────── */
@@ -264,6 +264,60 @@ body::after {
   .hdr-t    { font-size: 18px; }
   .splash-logo { font-size: 38px; letter-spacing: 5px; }
 }
+
+/* ─── LOST-CONTACT MODE ─────────────────────────────────── */
+.lost { --c1:#FF3333; --c2:#CC1F1F; --c3:#3D0808; --cfnt:rgba(255,34,34,.07); }
+#boot-splash.lost { --g:#FF2222; --gdim:#CC1111; }
+#boot-splash.lost .splash-logo { animation: lostjit 2.1s steps(1) infinite; text-shadow: 3px 0 #00FFFF, -3px 0 #FF00AA; }
+#lost-b { display:none; border:1px solid #FF2222; border-top:none; background:rgba(255,0,0,.09); padding:14px 18px; text-align:center; position:relative; overflow:hidden; }
+.lost #lost-b { display:block; }
+.lb-t { font-family:'VT323',monospace; font-size:clamp(28px,5.4vw,52px); letter-spacing:4px; color:#FF2222; position:relative; line-height:1.1; text-shadow:0 0 14px #FF2222; animation: lostjit 1.7s steps(1) infinite; }
+.lb-t::before,.lb-t::after { content:attr(data-t); position:absolute; left:0; right:0; top:0; }
+.lb-t::before { color:#00FFFF; transform:translate(3px,0); clip-path:inset(0 0 55% 0); mix-blend-mode:screen; animation:lbs1 1.3s steps(1) infinite; }
+.lb-t::after  { color:#FF00AA; transform:translate(-3px,0); clip-path:inset(50% 0 0 0); mix-blend-mode:screen; animation:lbs2 1.9s steps(1) infinite; }
+@keyframes lbs1 { 0%,100%{transform:translate(3px,0)} 30%{transform:translate(-6px,2px)} 60%{transform:translate(8px,-1px)} }
+@keyframes lbs2 { 0%,100%{transform:translate(-3px,0)} 25%{transform:translate(7px,1px)} 70%{transform:translate(-9px,-2px)} }
+.lb-s { font-size:12px; letter-spacing:3px; color:#FF6666; margin-top:8px; line-height:1.8; }
+.lb-s2 { font-size:10px; letter-spacing:3px; color:#CC4444; margin-top:4px; animation: blink 1.1s infinite; }
+@keyframes lostjit {
+  0%,100%{transform:none;opacity:1}
+  6%{transform:translate(-4px,1px) skewX(8deg)}
+  7%{transform:none}
+  38%{transform:translate(5px,-1px);opacity:.6}
+  39%{transform:none;opacity:1}
+  71%{transform:translate(-2px,0) scaleY(1.12);opacity:.5}
+  72%{transform:none;opacity:1}
+}
+@keyframes ptear {
+  0%,100%{transform:none;clip-path:none}
+  12%{transform:translateX(-6px);clip-path:inset(20% 0 55% 0)}
+  13%{transform:translateX(7px);clip-path:inset(60% 0 10% 0)}
+  14%{transform:none;clip-path:none}
+  58%{transform:translateX(4px);filter:hue-rotate(160deg) brightness(1.6)}
+  59%{transform:none;filter:none}
+}
+.lost .tv,.lost .bpm,.lost .met,.lost .met-sol { color:#FF3333; text-shadow:2px 0 #00FFFF,-2px 0 #FF00AA,0 0 10px #FF2222; animation:lostjit 2.3s steps(1) infinite; }
+.lost .p:nth-child(odd)  { animation: ptear 6.3s steps(1) infinite; }
+.lost .p:nth-child(even) { animation: ptear 8.1s steps(1) infinite -3s; }
+.lost .row:nth-of-type(2) .tv { animation-delay:-.8s; }
+.lost .row:nth-of-type(3) .tv { animation-delay:-1.5s; }
+.lost .pt::after { content:' ⚠ ERR'; color:#FF2222; font-size:9px; letter-spacing:2px; animation:blink .9s infinite; margin-left:auto; }
+.lost .tu::after { content:' [INVALID]'; color:#FF4444; }
+.lost .pb-fill { background:repeating-linear-gradient(45deg,#FF2222 0 6px,#400 6px 12px) !important; box-shadow:0 0 8px #FF2222 !important; }
+.lost #traj { height: 230px; }
+.lost .tlog .lerr { color:#FF4444; }
+.lost .tlog .ts { color:#AA2222; }
+.lost .vs, .lost .vd { color:#FF5555; }
+.lost .vd { animation: blink 1.6s steps(1) infinite; }
+.lost .ecg-w { position:relative; border:1px dashed #AA2222; background:repeating-linear-gradient(0deg,rgba(255,0,0,.08) 0 2px,transparent 2px 5px); }
+.lost .ecg-w svg { display:none; }
+.lost .ecg-w::after { content:'▒▒ NO DATA — SENSOR LINK LOST ▒▒'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'VT323',monospace; font-size:20px; letter-spacing:2px; white-space:nowrap; color:#FF3333; animation:lostjit 1.9s steps(1) infinite; }
+#lost-static { display:none; position:fixed; inset:0; z-index:8000; pointer-events:none; }
+.lost-on #lost-static { display:block; }
+#lost-static .ns { position:absolute; inset:0; opacity:.16; mix-blend-mode:screen; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); background-size:200px; animation: sdrift .1s steps(1) infinite; }
+#lost-static .band { position:absolute; left:0; right:0; height:90px; background:linear-gradient(180deg,transparent,rgba(255,40,40,.12),transparent); animation: bandmove 4.5s linear infinite; }
+@keyframes bandmove { from{top:-100px} to{top:100%} }
+.gbar { position:fixed; left:0; right:0; pointer-events:none; z-index:8500; mix-blend-mode:screen; }
 </style>
 </head>
 <body>
@@ -276,22 +330,23 @@ body::after {
 <script>
 var MANUAL_OFFLINE   = false;
 var MANUAL_EMERGENCY = false;
+var MISSION_LOST     = true;   // true → contacto perdido con VESTA: glitches, lecturas erróneas, sin datos del comandante
 </script>
 
 <!-- ═══════════════════════════════════════════════════════
      BOOT SPLASH SCREEN
 ════════════════════════════════════════════════════════ -->
-<div id="boot-splash">
+<div id="boot-splash" class="lost">
   <div class="splash-logo">✦ AETHER ✦</div>
   <div class="splash-sub">DEEP SPACE TELEMETRY SYSTEM &nbsp;·&nbsp; NODE 7 &nbsp;·&nbsp; v4.7</div>
   <div class="splash-divider"></div>
   <div class="splash-signal">
-    [ SIGNAL DETECTED FROM VESTA ]&nbsp;<span class="cur">█</span>
+    [ NO SIGNAL FROM VESTA ]&nbsp;<span class="cur">█</span>
   </div>
   <div class="splash-sub" style="font-size:10px;opacity:.5;">
-    UNIT: VESTA &nbsp;·&nbsp; CMD: REN ISHII &nbsp;·&nbsp; MISSION: AETHER
+    UNIT: VESTA &nbsp;·&nbsp; CMD: REN ISHII &nbsp;·&nbsp; MISSION: AETHER<br>CONTACT LOST WITH VESTA
   </div>
-  <button id="init-btn" onclick="initializeUplink()">[ INITIALIZE AUDIO UPLINK ]</button>
+  <button id="init-btn" onclick="initializeUplink()">[ ENTER MAIN INTERFACE ]</button>
   <div class="splash-note">REQUIRES USER INTERACTION TO ACTIVATE AUDIO</div>
 </div>
 
@@ -305,16 +360,23 @@ var MANUAL_EMERGENCY = false;
   <div class="hdr">
     <div>
       <div class="hdr-t">MISSION: AETHER &nbsp;│&nbsp; UNIT: VESTA &nbsp;│&nbsp; CMD: REN ISHII</div>
-      <div class="hdr-s">DEEP SPACE TELEMETRY UPLINK v4.7 &nbsp;·&nbsp; EARTH-RELAY NODE 7 &nbsp;·&nbsp; <span id="sol-hdr">SOL –</span></div>
+      <div class="hdr-s">DEEP SPACE TELEMETRY UPLINK v4.7 &nbsp;·&nbsp; EARTH-RELAY NODE 7 <span style="color:#FF4444">[NO RESPONSE]</span> &nbsp;·&nbsp; <span id="sol-hdr">SOL –</span></div>
     </div>
     <div style="text-align:right;">
-      <div class="srow"><span class="sdot" id="sdot"></span><span id="stxt">UPLINK ACTIVE</span></div>
+      <div class="srow"><span class="sdot" id="sdot"></span><span id="stxt">SIGNAL LOST</span></div>
       <div class="hdr-s" style="margin-top:4px;" id="utc-clock">–</div>
     </div>
   </div>
 
   <!-- EMERGENCY BANNER -->
   <div id="emg-b"><span class="emgt">⚠ ANOMALY DETECTED — MISSION STATUS DEGRADED — AWAIT K.A.I. ASSESSMENT ⚠</span></div>
+
+  <!-- LOST CONTACT BANNER -->
+  <div id="lost-b">
+    <div class="lb-t" data-t="⚠ CONTACT LOST WITH VESTA ⚠">⚠ CONTACT LOST WITH VESTA ⚠</div>
+    <div class="lb-s">SE PERDIÓ EL CONTACTO CON LA NAVE VESTA — MISSION AETHER: STATUS UNKNOWN</div>
+    <div class="lb-s2">NO TELEMETRY &nbsp;·&nbsp; NO DATA FROM CDR. REN ISHII</div>
+  </div>
 
   <!-- ROW 1: MET + TRAJECTORY -->
   <div class="row r2">
@@ -365,7 +427,7 @@ var MANUAL_EMERGENCY = false;
       <div class="pt">BIOMETRIC MONITOR — CDR. REN ISHII</div>
       <div style="display:flex;align-items:baseline;gap:10px;">
         <div class="bpm" id="bpm">58</div>
-        <div><div class="tu">BPM CARDIAC</div></div>
+        <div><div class="tu" id="bpm-u">BPM CARDIAC</div></div>
       </div>
       <div class="ecg-w">
         <svg class="ecg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 75" preserveAspectRatio="none">
@@ -379,7 +441,7 @@ var MANUAL_EMERGENCY = false;
         </svg>
       </div>
       <div class="vs" id="vstatus">◈ STATUS: DEEP STASIS &nbsp;/&nbsp; STABLE &nbsp;<span style="animation:blink 2s infinite;display:inline-block;">█</span></div>
-      <div class="vd">CORE TEMP: 18.4 °C &nbsp;│&nbsp; O₂ SAT: 99.8% &nbsp;│&nbsp; CRYO PRESSURE: NOMINAL</div>
+      <div class="vd" id="vitals-d">CORE TEMP: 18.4 °C &nbsp;│&nbsp; O₂ SAT: 99.8% &nbsp;│&nbsp; CRYO PRESSURE: NOMINAL</div>
     </div>
     <div class="p" style="border-right:none;border-bottom:none;">
       <div class="pt">K.A.I. — KINETIC AUTONOMOUS INTELLIGENCE</div>
@@ -392,6 +454,8 @@ var MANUAL_EMERGENCY = false;
 
 </div><!-- /wrap -->
 </div><!-- /dashboard -->
+
+<div id="lost-static"><div class="ns"></div><div class="band"></div></div>
 
 <!-- SIGNAL LOST OVERLAY -->
 <div id="sig-ov">
@@ -468,6 +532,7 @@ function getProg() {
 
 // ─── TRAJECTORY CANVAS ───────────────────────────────────
 function drawTraj() {
+  if (MISSION_LOST) { drawLostTraj(); return; }
   var cv  = document.getElementById('traj');
   var ctx = cv.getContext('2d');
   cv.width  = cv.offsetWidth || 500;
@@ -544,6 +609,7 @@ var glitching       = false;
 
 // ─── TELEMETRY UPDATE ────────────────────────────────────
 function updateTelemetry() {
+  if (MISSION_LOST) { lostTelemetry(); return; }
   var t = getProg();
 
   // Distance to Mars: lerp 225 → 0
@@ -576,6 +642,7 @@ function updateTelemetry() {
 
 // ─── MET / SOL UPDATE ────────────────────────────────────
 function updateMET() {
+  if (MISSION_LOST) { lostMET(); return; }
   var { d, h, m, s } = getMET();
 
   // SOL: days elapsed (1-indexed for drama)
@@ -617,6 +684,7 @@ function updateWinTimer() {
 
 // ─── MODE MANAGEMENT ─────────────────────────────────────
 function applyModes() {
+  if (MISSION_LOST) { applyLostMode(); return; }
   var uh       = new Date().getUTCHours();
   var autoOff  = (uh >= SIG_START_UTC && uh < SIG_END_UTC);
   var offline  = MANUAL_OFFLINE  || autoOff;
@@ -676,6 +744,7 @@ setInterval(function() {
 
 // ─── BPM VARIATION ───────────────────────────────────────
 setInterval(function() {
+  if (MISSION_LOST) return;
   document.getElementById('bpm').textContent = 54 + Math.floor(Math.random() * 9);
 }, 4200);
 
@@ -811,6 +880,7 @@ function addLog(msg) {
 
 // ─── BOOT SEQUENCE (triggered by CONNECT button) ──────────
 function bootKAI() {
+  if (MISSION_LOST) { lostBootLog(); return; }
   var log = document.getElementById('tlog');
   var bootLines = [
     'AETHER DEEP SPACE NETWORK — RELAY NODE 7 ONLINE.',
@@ -839,6 +909,7 @@ function bootKAI() {
 
 // ─── SIGNAL BOOST ────────────────────────────────────────
 function doBoost() {
+  if (MISSION_LOST) { lostBoost(); return; }
   document.getElementById('wrap').classList.add('glitching');
   setTimeout(function() { document.getElementById('wrap').classList.remove('glitching'); }, 700);
   var lines = [
@@ -867,7 +938,7 @@ function initializeUplink() {
   document.getElementById('init-btn').textContent = '[ CONNECTING... ]';
 
   // 1. Start audio — requires this user gesture
-  startCabinAmbience();
+  if (MISSION_LOST) startStatic(); else startCabinAmbience();
 
   // 2. Fade out splash
   setTimeout(function() {
@@ -887,6 +958,231 @@ function initializeUplink() {
   setTimeout(function() {
     bootKAI();
   }, 1000);
+  if (MISSION_LOST) startLostFx();
+}
+
+
+// ════════════════════════════════════════════════════════
+//  LOST-CONTACT MODE (MISSION_LOST = true)
+// ════════════════════════════════════════════════════════
+var GLY = '█▓▒░#@%&?!/\\|<>~¦§Ø∆';
+function rnd(a) { return a[Math.floor(Math.random() * a.length)]; }
+function corrupt(str, p) {
+  var o = '';
+  for (var i = 0; i < str.length; i++) o += (str[i] !== ' ' && Math.random() < p) ? rnd(GLY) : str[i];
+  return o;
+}
+function badNum() {
+  var r = Math.random();
+  if (r < .16) return 'NaN';
+  if (r < .30) return 'ERR';
+  if (r < .42) return '#####';
+  if (r < .52) return '∞';
+  if (r < .62) return '-' + (Math.random() * 9e6).toFixed(0);
+  if (r < .72) return '0.000';
+  if (r < .82) return (Math.random() * 1e3).toFixed(3) + '?';
+  if (r < .90) return '█▓▒' + Math.floor(Math.random() * 99) + '░';
+  return (Math.random() * 99999).toExponential(2);
+}
+function setT(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+
+function lostTelemetry() {
+  setT('dist', badNum());
+  setT('vel',  badNum());
+  var r = Math.random();
+  setT('lat', r < .4 ? 'TIMEOUT' : r < .6 ? 'NO CARRIER' : r < .8 ? '∞' : badNum());
+  setT('latu', corrupt('SECONDS ONE-WAY', .12));
+}
+function lostMET() {
+  setT('sol-big', Math.random() < .6 ? 'ERR' : corrupt('000', .7));
+  setT('sol-hdr', 'SOL ' + (Math.random() < .6 ? 'ERR' : corrupt('000', .7)));
+  setT('met-hms', Math.random() < .5 ? '--:--:--' : (Math.random() < .5 ? 'NaN:NaN:NaN' : corrupt('00:00:00', .5)));
+  var pb = document.getElementById('pbar');
+  pb.style.width = (Math.random() < .5 ? 100 : Math.random() * 100).toFixed(1) + '%';
+  setT('pbl', corrupt('TELEMETRY INVALID — PROGRESS UNVERIFIABLE — CONTACT LOST', .05));
+}
+function applyLostMode() {
+  isOfflineMode = true; isEmergencyMode = false;
+  document.getElementById('wrap').classList.add('lost');
+  document.getElementById('sig-ov').classList.remove('on');
+  document.getElementById('emg-b').classList.remove('on');
+  var dot = document.getElementById('sdot'), st = document.getElementById('stxt');
+  dot.style.cssText = 'width:7px;height:7px;border-radius:50%;background:#FF2222;box-shadow:0 0 6px #FF2222;animation:blink .5s infinite;';
+  st.style.color = '#FF2222'; st.textContent = 'SIGNAL LOST';
+  document.getElementById('vstatus').textContent = '⚠ STATUS: UNKNOWN — NO DATA FROM CDR. REN ISHII';
+  setT('bpm', '---');
+  setT('bpm-u', 'BPM — NO DATA');
+  setT('vitals-d', 'CORE TEMP: ---.- │ O₂ SAT: ---% │ CRYO PRESSURE: NO DATA');
+}
+var spinyUntil = 0, spinyX = 0.5, spinyY = 0.5, spinyFirst = false;
+function drawLostTraj() {
+  var cv = document.getElementById('traj'), ctx = cv.getContext('2d');
+  cv.width = cv.offsetWidth || 500; cv.height = 230;
+  var W = cv.width, H = cv.height, cx = W / 2, cy = H / 2 - 4;
+  var MONO = 'Share Tech Mono, monospace', VT = 'VT323, monospace';
+  ctx.clearRect(0, 0, W, H);
+  // estrellas
+  for (var i = 0; i < 70; i++) {
+    ctx.fillStyle = 'rgba(255,70,70,' + (0.08 + Math.abs(Math.sin(i * 73)) * .16) + ')';
+    ctx.fillRect((Math.sin(i * 137.5) * .5 + .5) * W, (Math.cos(i * 97.3) * .5 + .5) * H, 1, 1);
+  }
+  // sistema solar completo (esquemático): Sol + 8 órbitas
+  var P = [
+    ['MERCURY', .07, 40,  2], ['VENUS', .12, 120, 3], ['EARTH', .18, 200, 4], ['MARS', .25, 335, 3.5],
+    ['JUPITER', .42, 75,  6], ['SATURN', .60, 250, 5], ['URANUS', .78, 150, 4], ['NEPTUNE', .96, 20, 4]
+  ];
+  var RX = W / 2 - 14, RY = H / 2 - 16, pos = {};
+  P.forEach(function(q) {
+    ctx.beginPath(); ctx.ellipse(cx, cy, RX * q[1], RY * q[1], 0, 0, 6.283);
+    ctx.strokeStyle = 'rgba(255,50,50,.2)'; ctx.lineWidth = 1; ctx.stroke();
+    var an = q[2] * Math.PI / 180, px = cx + Math.cos(an) * RX * q[1], py = cy + Math.sin(an) * RY * q[1];
+    pos[q[0]] = [px, py];
+    var hi = (q[0] === 'EARTH' || q[0] === 'MARS');
+    ctx.beginPath(); ctx.arc(px, py, q[3] + (hi ? 2 : 0), 0, 6.283);
+    ctx.fillStyle = hi ? '#220000' : 'rgba(255,80,80,.55)'; ctx.fill();
+    ctx.strokeStyle = hi ? '#FF3333' : 'rgba(255,80,80,.7)'; ctx.lineWidth = hi ? 1.6 : 1; ctx.stroke();
+    ctx.fillStyle = hi ? '#FF5555' : 'rgba(255,100,100,.55)'; ctx.font = '7px ' + MONO; ctx.textAlign = 'center';
+    ctx.fillText(q[0], px, py + q[3] + (hi ? 12 : 10));
+  });
+  // Sol
+  ctx.save(); ctx.shadowColor = '#FF2222'; ctx.shadowBlur = 14;
+  ctx.beginPath(); ctx.arc(cx, cy, 7, 0, 6.283); ctx.fillStyle = '#FF4444'; ctx.fill(); ctx.restore();
+  ctx.fillStyle = '#FF6666'; ctx.font = '7px ' + MONO; ctx.textAlign = 'center'; ctx.fillText('SUN', cx, cy + 17);
+  // recorrido Tierra → Marte (trayectoria de la misión)
+  var E = pos['EARTH'], M = pos['MARS'];
+  ctx.beginPath(); ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(255,70,70,.85)'; ctx.lineWidth = 1.4;
+  ctx.moveTo(E[0], E[1]); ctx.quadraticCurveTo(cx + 10, cy + RY * .42, M[0], M[1]); ctx.stroke(); ctx.setLineDash([]);
+  // signos de interrogación en distintos sitios (posición de VESTA desconocida)
+  var nq = 4 + Math.floor(Math.random() * 4);
+  for (var k = 0; k < nq; k++) {
+    var qx = 14 + Math.random() * (W - 28), qy = 16 + Math.random() * (H - 36);
+    ctx.globalAlpha = .35 + Math.random() * .65;
+    ctx.fillStyle = Math.random() < .2 ? '#00FFFF' : '#FF3333';
+    ctx.font = (14 + Math.floor(Math.random() * 16)) + 'px ' + VT;
+    ctx.textAlign = 'center'; ctx.fillText('?', qx, qy);
+  }
+  ctx.globalAlpha = 1;
+  // barras de glitch
+  for (var g = 0; g < 4; g++) {
+    ctx.fillStyle = Math.random() < .5 ? 'rgba(255,0,60,.2)' : 'rgba(0,255,255,.11)';
+    ctx.fillRect(Math.random() * W * .5, Math.random() * H, W * (.2 + Math.random() * .6), 1 + Math.random() * 5);
+  }
+  // errores
+  ctx.textAlign = 'center'; ctx.fillStyle = '#FF3333'; ctx.font = '18px ' + VT;
+  ctx.fillText(Math.random() < .85 ? 'NO SIGNAL — POSITION UNKNOWN' : corrupt('NO SIGNAL — POSITION UNKNOWN', .3), W / 2, 16);
+  ctx.textAlign = 'left'; ctx.font = '9px ' + MONO; ctx.fillStyle = 'rgba(255,70,70,.65)';
+  ctx.fillText('TRANSIT: ERR  |  SOL ERR  |  TELEMETRY LOST', 8, H - 5);
+  // mensaje esporádico y glitcheado
+  var now = Date.now();
+  if (spinyFirst && now > spinyUntil && Math.random() < .012) {
+    spinyUntil = now + 1500 + Math.random() * 1200;
+    spinyX = .08 + Math.random() * .3; spinyY = .25 + Math.random() * .5;
+  }
+  if (now < spinyUntil) {
+    var msg = '@Spiny1 Need more info!!!!', tx = W * spinyX, ty = H * spinyY;
+    ctx.font = "22px " + VT; ctx.textAlign = 'left';
+    var j = (Math.random() - .5) * 14;
+    ctx.fillStyle = 'rgba(0,255,255,.8)';  ctx.fillText(Math.random() < .6 ? msg : corrupt(msg, .25), tx + 3 + j, ty);
+    ctx.fillStyle = 'rgba(255,0,140,.8)';  ctx.fillText(Math.random() < .6 ? msg : corrupt(msg, .25), tx - 3 - j, ty + 1);
+    ctx.fillStyle = '#FFFFFF';             ctx.fillText(Math.random() < .55 ? msg : corrupt(msg, .18), tx, ty);
+    if (Math.random() < .5) { ctx.fillStyle = 'rgba(0,0,0,.85)'; ctx.fillRect(tx - 4, ty - 22 + Math.random() * 24, 330, 2 + Math.random() * 5); }
+  }
+}
+
+// ─── Terminal en modo perdido ───
+var lostRetry = 0;
+function lostLine(msg, cls) {
+  var log = document.getElementById('tlog');
+  var n = new Date();
+  var ts = '[' + pad(n.getUTCHours()) + ':' + pad(n.getUTCMinutes()) + ':' + pad(n.getUTCSeconds()) + ' UTC]';
+  var line = document.createElement('span');
+  line.style.display = 'block'; line.style.animation = 'boot-in .3s ease forwards';
+  line.innerHTML = '<span class="ts">' + ts + '</span><span class="lerr"> SYS›</span> ';
+  line.appendChild(document.createTextNode(msg));
+  log.appendChild(line);
+  while (log.children.length > 80) log.removeChild(log.firstChild);
+  log.scrollTop = log.scrollHeight;
+}
+function lostBootLog() {
+  var L = [
+    'AETHER DEEP SPACE NETWORK — RELAY NODE 7: NO RESPONSE.',
+    'SCANNING FOR CARRIER FROM UNIT VESTA...',
+    'ERR 0x7F: CARRIER NOT DETECTED.',
+    'CDR. REN ISHII — STATUS: UNKNOWN / NO TELEMETRY.',
+    'CONTACT LOST WITH VESTA. / SE PERDIÓ EL CONTACTO CON LA NAVE VESTA.',
+    '─────────────────────────────────────────'
+  ];
+  L.forEach(function(m, i) { setTimeout(function() { lostLine(m); }, i * 520); });
+  setTimeout(lostLoop, L.length * 520 + 1500);
+}
+function lostLoop() {
+  var pool = [
+    function() { return '> RETRY #' + (++lostRetry) + ' — NO CARRIER'; },
+    function() { return '> HANDSHAKE WITH K.A.I. ... TIMEOUT'; },
+    function() { return '> ERR 0xC0DE: LINK TO VESTA LOST'; },
+    function() { return '> DSN NODE 7: NO RESPONSE FROM UNIT VESTA'; },
+    function() { return '> PACKET LOSS: 100%'; },
+    function() { return '> CDR. REN ISHII: NO DATA'; },
+    function() { return '> CHANNEL STATUS: NO CARRIER'; },
+    function() { return '> LAST VALID FRAME: UNKNOWN'; },
+    function() { return corrupt('> CHECKSUM FAIL — FRAME DISCARDED', .22); },
+    function() { return corrupt('> CONTACT LOST WITH VESTA', .3); },
+    function() { return '> ' + corrupt('0123456789ABCDEF0123456789ABCDEF', .55); }
+  ];
+  lostLine(rnd(pool)());
+  setTimeout(lostLoop, 3200 + Math.random() * 3800);
+}
+function lostBoost() {
+  document.getElementById('wrap').classList.add('glitching');
+  setTimeout(function() { document.getElementById('wrap').classList.remove('glitching'); }, 700);
+  var lines = ['> BOOST SEQUENCE INITIATED...', '> Amplifying carrier wave... ████████░░', '> Uplink Attempt...', '> ERR: NO CARRIER — NO RESPONSE FROM VESTA.'];
+  var msg = document.getElementById('bmsg'); msg.textContent = '';
+  var li = 0;
+  var iv = setInterval(function() { if (li < lines.length) { msg.textContent += lines[li] + '\n'; li++; } else clearInterval(iv); }, 340);
+}
+
+// ─── Efectos visuales y audio de estática ───
+function glitchBurst() {
+  var n = 3 + Math.floor(Math.random() * 4);
+  var made = [];
+  for (var i = 0; i < n; i++) {
+    var b = document.createElement('div'); b.className = 'gbar';
+    b.style.top = (Math.random() * 100) + 'vh';
+    b.style.height = (2 + Math.random() * 38) + 'px';
+    b.style.background = rnd(['rgba(255,0,60,.22)', 'rgba(0,255,255,.15)', 'rgba(255,255,255,.12)', 'rgba(255,40,40,.3)']);
+    b.style.transform = 'translateX(' + ((Math.random() - .5) * 60) + 'px)';
+    document.body.appendChild(b); made.push(b);
+  }
+  var w = document.getElementById('wrap');
+  if (Math.random() < .6) { w.classList.add('glitching'); setTimeout(function() { w.classList.remove('glitching'); }, 650); }
+  setTimeout(function() { made.forEach(function(b) { b.remove(); }); }, 120 + Math.random() * 200);
+}
+function startLostFx() {
+  document.body.classList.add('lost-on');
+  (function loop() { glitchBurst(); setTimeout(loop, 1800 + Math.random() * 4200); })();
+  setInterval(drawTraj, 350);
+  // Primera aparición del mensaje de @Spiny1: a los 3 segundos de entrar a la interfaz
+  setTimeout(function() {
+    spinyFirst = true;
+    spinyUntil = Date.now() + 2200;
+    spinyX = .1; spinyY = .5;
+  }, 3000);
+}
+function startStatic() {
+  try {
+    var ac = getAC();
+    var buf = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    var src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+    var bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2400; bp.Q.value = .4;
+    var g = ac.createGain(); g.gain.value = 0.012;
+    src.connect(bp); bp.connect(g); g.connect(ac.destination); src.start();
+    setInterval(function() {
+      var t = ac.currentTime, hi = Math.random() < .3;
+      g.gain.setValueAtTime(hi ? 0.05 : 0.012, t);
+      g.gain.setValueAtTime(0.012, t + 0.05 + Math.random() * .2);
+    }, 900);
+  } catch (e) {}
 }
 
 // ─── MAIN LOOP ───────────────────────────────────────────
